@@ -1,6 +1,6 @@
 //
 //  SnsLoginRequest.swift
-//  BaeknyeonSamgyetang
+//  musinshop
 //
 //  Created by cha on 11/4/24.
 //

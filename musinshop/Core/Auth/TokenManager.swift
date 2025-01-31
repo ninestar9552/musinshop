@@ -1,6 +1,6 @@
 //
 //  TokenManager.swift
-//  BaeknyeonSamgyetang
+//  musinshop
 //
 //  Created by cha on 11/5/24.
 //
@@ -19,7 +19,7 @@ final public class TokenManager : TokenManagable {
     /// 간편한 사용을 위한 싱글톤 객체입니다.
     static public let manager = TokenManager()
     
-    let TokenKey = "com.baeknyeonsamgyetang.orderapp.token"
+    let TokenKey = "com.musinshop.orderapp.token"
     
     var token : TokenResponse?
     
