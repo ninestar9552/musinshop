@@ -13,7 +13,7 @@ public class Hosts {
     public let api: String
     
     public init(
-        api: String = "http://10.112.60.173:8081"
+        api: String = "http://10.112.58.113:8000"
     ) {
         self.api = api
     }
@@ -23,7 +23,7 @@ public class HostsDev: Hosts {
     public static let sharedDev = HostsDev()
     
     public override init(
-        api: String = "http://10.112.60.173:8081"
+        api: String = "http://10.112.58.113:8000"
     ) {
         super.init(api: api)
     }
@@ -37,6 +37,6 @@ public class Urls {
     }
     
     //product
-    public static let getCategoryList = "/api/user/me"
+    public static let getCategoryList = "/api/category/list"
     
 }
