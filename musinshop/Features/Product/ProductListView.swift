@@ -21,12 +21,15 @@ struct ProductListView: View {
                 GridItem(.flexible(), spacing: 0, alignment: .top)
             ], spacing: 0) {
                 ForEach(viewModel.productList) { product in
-                    ProductCell(product: product)
+                    NavigationLink(destination: ProductDetailView(productId: product.id)) {
+                        ProductCell(product: product)
+                    }
                 }
             }
         }
         .background(.white)
         .navigationTitle(category.name)
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.getProductList(category.id)
         }
@@ -41,28 +44,7 @@ struct ProductCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // 상단 이미지
-            if let imageUrl = product.thumbnailImageUrl, let url = URL(string: imageUrl) {
-                ZStack {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .clipped() // 비율에 맞게 잘라냄
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity) // 너비를 최대로 설정
-                }
-                .frame(maxWidth: .infinity) // 너비를 최대로 설정
-                .aspectRatio(1/1.2, contentMode: .fit) // 가로:세로 비율 1:1.2
-            } else {
-                // 이미지가 없는 경우 기본 이미지
-                Color.gray.opacity(0.3)
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(1/1.2, contentMode: .fit) // 가로:세로 비율 1:1.2
-                
-            }
-//        }
+            ThumbnailImageView(url: product.thumbnailImageUrl)
             
             VStack(alignment: .leading, spacing: 4) {
                 
@@ -79,6 +61,7 @@ struct ProductCell: View {
                 
                 // 가격
                 HStack(alignment: .top, spacing: 0) {
+                    // 할인률
                     if (product.discountRate != 0) {
                         Text("\(product.discountRate.toPercentageString())")
                             .font(.system(size: 13, weight: .bold))
@@ -108,11 +91,10 @@ struct ProductCell: View {
         ProductListView(
             category: Category(
                 id: 2,
-                name: "바지",
-                parentId: nil,
+                name: "아우터",
+                parentId: 1,
                 children: nil
             )
         )
     }
-    .navigationBarTitleDisplayMode(.inline)
 }
