@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var navigationVM = NavigationViewModel()
+    @StateObject private var navigationViewModel = NavigationViewModel()
     
     var body: some View {
         CategoryListView()
-            .environmentObject(navigationVM)
+            .environmentObject(navigationViewModel)
     }
 }
 

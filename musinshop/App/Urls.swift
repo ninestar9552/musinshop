@@ -38,5 +38,7 @@ public class Urls {
     
     //product
     public static let getCategoryList = "/api/category/list"
+    public static let getProductList = "/api/item/list"
+    public static let getProductDetail = "/api/item/get"
     
 }

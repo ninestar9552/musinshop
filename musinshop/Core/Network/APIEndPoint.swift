@@ -89,5 +89,19 @@ enum APIEndPoint {
                 method: .get
             )
         }
+        
+        static func getProductList(_ categoryId: Int) -> Request<EmptyBody, CommonResponse<[ProductResponse]>> {
+            Request(
+                path: "\(Urls.getProductList)/\(categoryId)",
+                method: .get
+            )
+        }
+        
+        static func getProductDetail(_ id: Int) -> Request<EmptyBody, CommonResponse<ProductResponse>> {
+            Request(
+                path: "\(Urls.getProductDetail)/\(id)",
+                method: .get
+            )
+        }
     }
 }
