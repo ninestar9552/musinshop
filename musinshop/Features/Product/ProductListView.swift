@@ -58,6 +58,7 @@ struct ProductCell: View {
                     .font(.system(size: 13, weight: .regular))
                     .foregroundColor(.black)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading) // 2줄일 때 첫째줄이 중앙정렬 됨
                 
                 // 가격
                 HStack(alignment: .top, spacing: 0) {
@@ -70,10 +71,10 @@ struct ProductCell: View {
                     }
                     
                     Text(
-                        "\((product.discountRate == 0) ? product.price : Int(Double(product.price)*(1-product.discountRate)))원"
+                        "\(((product.discountRate == 0) ? product.price : Int(Double(product.price)*(1-product.discountRate))).stringWithComma)원"
                     )
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(.black)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.black)
                 }
             }
             .padding(.top, 12)
