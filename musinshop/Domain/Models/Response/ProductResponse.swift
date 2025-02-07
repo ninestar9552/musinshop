@@ -19,4 +19,6 @@ public struct ProductResponse: Codable, Equatable, Identifiable {
     public let shortDescription: String?
     public let imageUrls: [String]?
     public let color: String?
+    public let parentCategoryName: String?
+    public let categoryName: String?
 }
