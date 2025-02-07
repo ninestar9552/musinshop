@@ -24,35 +24,7 @@ struct ProductDetailView: View {
                 // 상품 요약정보
                 VStack(alignment: .leading, spacing: 0) {
                     // 브랜드
-                    HStack(alignment: .center, spacing: 8) {
-                        ZStack {
-                            AsyncImage(url: URL(string: "https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?20200608153142")) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 26, height: 26)
-                            } placeholder: {
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 32, height: 32)
-                            }
-                            .frame(width: 32, height: 32) // 32*32 사이즈 기준 원형 클립
-                            .clipShape(Circle())
-                            
-                            Circle()
-                                .fill(.clear)
-                                .stroke(Color.lightGray, lineWidth: 1)
-                                .frame(width: 32, height: 32)
-                        }
-                        
-                        Text(viewModel.productDetail?.manufacturerName ?? "")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.black)
-                        
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
+                    ProductDetailBrandView(product: viewModel.productDetail)
                     
                     Rectangle()
                         .fill(Color.lightGray)
@@ -72,24 +44,7 @@ struct ProductDetailView: View {
                         .multilineTextAlignment(.leading)
                     
                     // 가격
-                    VStack(alignment: .leading, spacing: 2) {
-                        // 할인 전 가격
-                        if viewModel.productDetail?.discountRate != 0 {
-                            Text("\((viewModel.productDetail?.price ?? 0).stringWithComma)원")
-                                .font(.system(size: 13, weight: .regular))
-                                .foregroundColor(Color(hex: "8A8A8A"))
-                                .strikethrough()
-                        }
-                        
-                        // 할인 후 가격
-                        DiscountLabelView(
-                            price: viewModel.productDetail?.price ?? 0,
-                            discountRate: viewModel.productDetail?.discountRate,
-                            textSize: 18
-                        )
-                    }
-                    .padding(.top, 16)
-                    
+                    ProductDetailPriceView(product: viewModel.productDetail)
                     
                 }
                 .padding(.horizontal, 16)
@@ -123,6 +78,74 @@ struct ProductDetailView: View {
         }
     }
 }
+
+struct ProductDetailBrandView: View {
+    
+    let product: ProductResponse?
+    
+    var body: some View {
+        // 브랜드
+        HStack(alignment: .center, spacing: 8) {
+            ZStack {
+                AsyncImage(url: URL(string: "https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?20200608153142")) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 26, height: 26)
+                } placeholder: {
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: 32, height: 32)
+                }
+                .frame(width: 32, height: 32) // 32*32 사이즈 기준 원형 클립
+                .clipShape(Circle())
+                
+                Circle()
+                    .fill(.clear)
+                    .stroke(Color.lightGray, lineWidth: 1)
+                    .frame(width: 32, height: 32)
+            }
+            
+            Text(product?.manufacturerName ?? "")
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.black)
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+    }
+}
+
+struct ProductDetailPriceView: View {
+    
+    let product: ProductResponse?
+    
+    var body: some View {
+        HStack(alignment: .bottom, spacing: 4) {
+            // 가격
+            VStack(alignment: .leading, spacing: 2) {
+                // 할인 전 가격
+                if product?.discountRate != 0 {
+                    Text("\((product?.price ?? 0).stringWithComma)원")
+                        .font(.system(size: 13, weight: .regular))
+                        .foregroundColor(Color(hex: "8A8A8A"))
+                        .strikethrough()
+                }
+                
+                // 할인 후 가격
+                DiscountLabelView(
+                    price: product?.price ?? 0,
+                    discountRate: product?.discountRate,
+                    textSize: 18
+                )
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.top, 16)
+    }
+}
+
 
 #Preview {
     ProductDetailView(productId: 2)
