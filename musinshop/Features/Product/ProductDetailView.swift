@@ -43,6 +43,13 @@ struct ProductDetailView: View {
                         .padding(.top, 4)
                         .multilineTextAlignment(.leading)
                     
+                    // 상품 태그
+                    HStack(alignment: .center, spacing: 2) {
+                        TagTextView(text: "PLUS배송")
+                        TagTextView(text: "무신사단독")
+                    }
+                    .padding(.top, 8)
+                    
                     // 가격
                     ProductDetailPriceView(product: viewModel.productDetail)
                     
@@ -60,7 +67,7 @@ struct ProductDetailView: View {
                 
                 HStack(alignment: .center) {
                     Button(action: {
-                        
+                        print("구매하기 클릭!")
                     }) {
                         Text("구매하기")
                     }
@@ -105,12 +112,36 @@ struct ProductDetailBrandView: View {
                     .stroke(Color.lightGray, lineWidth: 1)
                     .frame(width: 32, height: 32)
             }
-            
             Text(product?.manufacturerName ?? "")
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundColor(.black)
             
+            TagTextView(text: "단독")
             Spacer()
+            
+            Button {
+                print("좋아요 클릭!")
+            } label: {
+                HStack(alignment: .center, spacing: 4) {
+                    Image(systemName: "heart")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 13, height: 13)
+                        .clipped()
+                    
+                    Text("2.1만")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(.black)
+                    
+                }
+                .padding(.horizontal, 5)
+                .frame(height: 24)
+                .background {
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color(hex: "E0E0E0"))
+                }
+            }
+            .buttonStyle(PressedEffectButtonStyle())
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)

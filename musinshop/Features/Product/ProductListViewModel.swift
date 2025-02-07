@@ -17,7 +17,7 @@ class ProductListViewModel: BaseViewModel {
                                 discountRate: 0.2,
                                 stockQuantity: 100,
                                 thumbnailImageUrl: nil,
-                                manufacturerName: "노스페이스",
+                                manufacturerName: "무신사 스탠다드",
                                 manufacturerLogo: "",
                                 itemNumber: "",
                                 gender: "MALE",

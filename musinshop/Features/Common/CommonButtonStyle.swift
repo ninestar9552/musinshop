@@ -16,7 +16,8 @@ struct PriamaryButtonStyle: ButtonStyle {
     var borderWidth: CGFloat = 1
     
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        configuration
+            .label
             .font(.system(size: fontSize, weight: .bold))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
@@ -28,6 +29,15 @@ struct PriamaryButtonStyle: ButtonStyle {
                     )
             )
             .foregroundColor(textColor)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0) // 눌렀을 때 크기 효과
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+    }
+}
+
+struct PressedEffectButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration
+            .label
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0) // 눌렀을 때 크기 효과
             .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
