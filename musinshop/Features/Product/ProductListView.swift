@@ -61,21 +61,7 @@ struct ProductCell: View {
                     .multilineTextAlignment(.leading) // 2줄일 때 첫째줄이 중앙정렬 됨
                 
                 // 가격
-                HStack(alignment: .top, spacing: 0) {
-                    // 할인률
-                    if (product.discountRate != 0) {
-                        Text("\(product.discountRate.toPercentageString())")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color(hex: "F31110"))
-                            .padding(.trailing, 2)
-                    }
-                    
-                    Text(
-                        "\(((product.discountRate == 0) ? product.price : Int(Double(product.price)*(1-product.discountRate))).stringWithComma)원"
-                    )
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(.black)
-                }
+                DiscountLabelView(price: product.price, discountRate: product.discountRate)
             }
             .padding(.top, 12)
             .padding(.bottom, 24)

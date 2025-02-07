@@ -26,10 +26,10 @@ struct ThumbnailImageView: View {
             }
             .frame(maxWidth: .infinity) // 너비를 최대로 설정
             .aspectRatio(1/1.2, contentMode: .fit) // 가로:세로 비율 1:1.2
-            .background(Color(hex: "F5F5F5"))
+            .background(Color.lightGray)
         } else {
             // 이미지가 없는 경우 기본 이미지
-            Color(hex: "F5F5F5")
+            Color.lightGray
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1/1.2, contentMode: .fit) // 가로:세로 비율 1:1.2
         }

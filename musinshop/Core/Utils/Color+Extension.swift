@@ -32,4 +32,8 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
+    
+    
+    // 자주 사용하는 색상을 정적 프로퍼티로 정의
+    static let lightGray = Color(hex: "F5F5F5")
 }

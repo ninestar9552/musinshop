@@ -40,7 +40,7 @@ struct CategoryListView: View {
                         .frame(width: 108)
                         .background(.red)
                     }
-                    .background(Color(hex: "F5F5F5"))
+                    .background(Color.lightGray)
                     
                     // 우측: 2depth 카테고리 목록
                     ScrollView {
@@ -82,7 +82,7 @@ struct CategoryCell: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 0)
             .frame(minWidth: 108, maxWidth: 108, minHeight: 36, maxHeight: 36, alignment: .leading)
-            .background(isSelected ? Color.white : Color(hex: "F5F5F5"))
+            .background(isSelected ? Color.white : Color.lightGray)
     }
 }
 
