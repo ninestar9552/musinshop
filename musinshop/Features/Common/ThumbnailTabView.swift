@@ -12,27 +12,68 @@ struct ThumbnailTabView: View {
     let urls: [String]?
     
     @State private var currentIndex = 1 // 앞뒤 가상이미지 추가로 index 1부터 시작
+    @State private var indicatorCurrentIndex = 1
     
     var body: some View {
         if let urls = urls {
-            TabView(selection: $currentIndex) {
-                ThumbnailImageView(url: urls.last)
-                    .tag(0)
-                
-                ForEach(urls.indices, id: \.self) { index in
-                    ThumbnailImageView(url: urls[index])
-                        .tag(index + 1) // 페이지를 인식하기 위해 태그 설정
+            ZStack {
+                TabView(selection: $currentIndex) {
+                    ThumbnailImageView(url: urls.last)
+                        .tag(0)
+                    
+                    ForEach(urls.indices, id: \.self) { index in
+                        ThumbnailImageView(url: urls[index])
+                            .tag(index + 1) // 페이지를 인식하기 위해 태그 설정
+                    }
+                    
+                    ThumbnailImageView(url: urls.first)
+                        .tag(urls.count + 1)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // 페이지 스타일과 인디케이터 설정
+                .onChange(of: currentIndex) { currentIndex in
+                    // 무한 스크롤 설정
+                    handleInfiniteScroll()
+                    // page indicator number 관리
+                    if currentIndex == 0 {
+                        indicatorCurrentIndex = urls.count
+                    } else if currentIndex == urls.count + 1 {
+                        indicatorCurrentIndex = 1
+                    } else {
+                        indicatorCurrentIndex = currentIndex
+                    }
                 }
                 
-                ThumbnailImageView(url: urls.first)
-                    .tag(urls.count + 1)
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Text("\(indicatorCurrentIndex) / \(urls.count)")
+                                .font(.system(size: 13, weight: .regular))
+                            Image(systemName: "chevron.right")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundStyle(.black)
+                                .frame(height: 9)
+                        }
+                        .padding(.horizontal, 6)
+                        .frame(height: 24)
+                        .backgroundStyle(
+                            backgroundColor: Color(hex: "66FFFFFF"),
+                            foregroundColor: .black,
+                            cornerRadius: 4
+                        )
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 15)
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // 페이지 스타일과 인디케이터 설정
-            .onChange(of: currentIndex) { _ in
-                handleInfiniteScroll()
-            }
+            .frame(maxWidth: .infinity)
+            .aspectRatio(1/1.2, contentMode: .fit)
         } else {
             ThumbnailImageView(url: nil)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1/1.2, contentMode: .fit)
         }
     }
     

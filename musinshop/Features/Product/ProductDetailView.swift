@@ -18,8 +18,6 @@ struct ProductDetailView: View {
             ScrollView {
                 // 썸네일 이미지
                 ThumbnailTabView(urls: viewModel.productDetail?.imageUrls)
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(1/1.2, contentMode: .fit)
                 
                 // 상품 요약정보
                 VStack(alignment: .leading, spacing: 0) {

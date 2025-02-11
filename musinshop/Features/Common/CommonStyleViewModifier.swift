@@ -115,6 +115,5 @@ enum BackgroundStyle {
     VStack {
         Text("Hello, World!")
     }
-    .padding(20)
-    .backgroundStyle(.secondaryEnabledButton)
+    .backgroundStyle(.secondaryDisabledButton)
 }
