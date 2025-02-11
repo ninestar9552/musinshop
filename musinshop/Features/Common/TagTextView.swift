@@ -13,13 +13,9 @@ struct TagTextView: View {
     var body: some View {
         Text(text)
             .font(.system(size: 11, weight: .regular))
-            .foregroundColor(Color(hex: "666666"))
             .padding(.vertical, 1)
             .padding(.horizontal, 4)
-            .background(
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(Color(hex: "1A8A8A8A")) // 버튼의 배경색
-            )
+            .backgroundStyle(.tag)
     }
 }
 

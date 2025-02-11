@@ -71,7 +71,7 @@ struct ProductDetailView: View {
                     }) {
                         Text("구매하기")
                     }
-                    .buttonStyle(PriamaryButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle())
                     .frame(maxWidth: .infinity, maxHeight: 44)
                     .padding(.vertical, 12)
                     .padding(.horizontal, 16)
