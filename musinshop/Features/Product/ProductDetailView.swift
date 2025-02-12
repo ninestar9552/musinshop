@@ -58,25 +58,8 @@ struct ProductDetailView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.white)
             
-            VStack(alignment: .center, spacing: 0) {
-                Rectangle()
-                    .fill(Color.lightGray) // 회색, 0.5 투명도
-                    .frame(height: 1) // 높이 0.5px
-                
-                HStack(alignment: .center) {
-                    Button(action: {
-                        print("구매하기 클릭!")
-                    }) {
-                        Text("구매하기")
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .frame(maxWidth: .infinity, maxHeight: 44)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                }
-                .frame(maxWidth: .infinity)
-                .background(.white)
-            }
+            // 구매하기 버튼
+            ProductDetailBuyButtonView()
         }
         .task {
             await viewModel.getProductDetail(productId)
@@ -124,6 +107,7 @@ struct ProductDetailBrandView: View {
                     Image(systemName: "heart")
                         .resizable()
                         .scaledToFit()
+                        .foregroundStyle(.black)
                         .frame(width: 13, height: 13)
                         .clipped()
                     
@@ -172,6 +156,49 @@ struct ProductDetailPriceView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.top, 16)
+    }
+}
+
+struct ProductDetailBuyButtonView: View {
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Rectangle()
+                .fill(Color.lightGray) // 회색, 0.5 투명도
+                .frame(height: 1) // 높이 0.5px
+            
+            HStack(alignment: .center, spacing: 12) {
+                VStack(alignment: .center, spacing: 0) {
+                    Button(action: {
+                        print("구매하기 옆 좋아요 클릭!")
+                    }) {
+                        Image(systemName: "heart")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundStyle(.black)
+                            .frame(width: 20, height: 20)
+                            .clipped()
+                    }
+                    .padding(4)
+                    .buttonStyle(PressedEffectButtonStyle())
+                    Text(1324.stringWithComma)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.black)
+                }
+                .frame(minWidth: 48)
+                Button(action: {
+                    print("구매하기 클릭!")
+                }) {
+                    Text("구매하기")
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .frame(maxWidth: .infinity, maxHeight: 44)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity)
+            .background(.white)
+        }
     }
 }
 
