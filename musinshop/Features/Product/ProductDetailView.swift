@@ -11,7 +11,7 @@ struct ProductDetailView: View {
     
     var productId: Int
     
-    @StateObject var viewModel: ProductListViewModel = ProductListViewModel()
+    @StateObject var viewModel: ProductDetailViewModel = ProductDetailViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
