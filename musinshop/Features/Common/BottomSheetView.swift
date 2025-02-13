@@ -40,16 +40,22 @@ struct BottomSheetView<Content: View>: View {
             Group {
                 if isPresented {
                     VStack(alignment: .center, spacing: 0) {
-                        // 바텀시트 핸들
-                        Capsule()
-                            .frame(width: 36, height: 4)
-                            .foregroundColor(Color(hex: "E0E0E0"))
-                            .padding(.vertical, 8)
+                        // 실제 content 영역
+                        VStack(alignment: .center, spacing: 0) {
+                            // 바텀시트 핸들
+                            Capsule()
+                                .frame(width: 36, height: 4)
+                                .foregroundColor(Color(hex: "E0E0E0"))
+                                .padding(.vertical, 8)
+                            
+                            // 바텀시트 콘텐츠
+                            content
+                                .frame(maxWidth: .infinity)
+                        }
                         
-                        // 바텀시트 콘텐츠
-                        content
-                            .padding(.bottom, 40)
-                            .frame(maxWidth: .infinity)
+                        // SafeArea bottom 영역을 채우는 흰색 배경
+                        Color.white
+                            .frame(height: UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0)
                     }
                     .background(Color.white)
                     .clipShape(
