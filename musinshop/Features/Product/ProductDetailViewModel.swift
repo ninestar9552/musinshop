@@ -35,6 +35,57 @@ class ProductDetailViewModel: BaseViewModel {
                                 categoryName: "패딩"
                             )
     
+    @Published private(set) var productOptionList: ProductOptionResponse = ProductOptionResponse(
+        type: 1,
+        colorOptions: [
+            ProductColorOption(
+                id: 1,
+                image: "https://image.msscdn.net/images/color_image/color/brown.png",
+                name: "BROWN"
+            ),
+            ProductColorOption(
+                id: 2,
+                image: "https://image.msscdn.net/images/color_image/color/lightyellow.png",
+                name: "BUTTER"
+            )
+        ],
+        sizeOptions: [
+            ProductOtherOption(id: 3, name: "26"),
+            ProductOtherOption(id: 4, name: "27"),
+            ProductOtherOption(id: 5, name: "28"),
+            ProductOtherOption(id: 6, name: "29"),
+            ProductOtherOption(id: 7, name: "30"),
+            ProductOtherOption(id: 8, name: "31"),
+            ProductOtherOption(id: 9, name: "32"),
+            ProductOtherOption(id: 10, name: "33"),
+            ProductOtherOption(id: 11, name: "34"),
+            ProductOtherOption(id: 12, name: "35"),
+            ProductOtherOption(id: 13, name: "36"),
+            ProductOtherOption(id: 14, name: "38"),
+        ],
+        otherOptions: nil
+    )
+    
+    var selectedOptions: ProductOrderRequest = ProductOrderRequest(
+        productId: 37,
+        orderOptions: [
+            ProductOptionRequest(
+                type: 1,
+                count: 3,
+                colorOptionId: 2,
+                sizeOptionId: 3,
+                otherOptionId: nil
+            ),
+            ProductOptionRequest(
+                type: 1,
+                count: 1,
+                colorOptionId: 1,
+                sizeOptionId: 14,
+                otherOptionId: nil
+            )
+        ]
+    )
+    
     
     private let getProductDetailUseCase: GetProductDetailUseCase
     

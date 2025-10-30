@@ -13,53 +13,112 @@ struct ProductDetailView: View {
     
     @StateObject var viewModel: ProductDetailViewModel = ProductDetailViewModel()
     
+    @State private var isBuyingPresented = false
+    
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                // 썸네일 이미지
-                ThumbnailTabView(urls: viewModel.productDetail?.imageUrls)
-                
-                // 상품 요약정보
-                VStack(alignment: .leading, spacing: 0) {
-                    // 브랜드
-                    ProductDetailBrandView(product: viewModel.productDetail)
+        ZStack {
+            VStack(spacing: 0) {
+                ScrollView {
+                    // 썸네일 이미지
+                    ThumbnailTabView(urls: viewModel.productDetail?.imageUrls)
                     
-                    Rectangle()
-                        .fill(Color.lightGray)
-                        .frame(height: 1)
-                    
-                    // 카테고리
-                    Text("\(viewModel.productDetail?.parentCategoryName ?? "")\(viewModel.productDetail?.categoryName != nil ? " > " : "")\(viewModel.productDetail?.categoryName ?? "")")
-                        .font(.system(size: 13, weight: .regular))
-                        .foregroundColor(Color(hex: "666666"))
-                        .padding(.top, 16)
-                    
-                    // 상품명
-                    Text(viewModel.productDetail?.name ?? "")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(.black)
-                        .padding(.top, 4)
-                        .multilineTextAlignment(.leading)
-                    
-                    // 상품 태그
-                    HStack(alignment: .center, spacing: 2) {
-                        TagTextView(text: "PLUS배송")
-                        TagTextView(text: "무신사단독")
+                    // 상품 요약정보
+                    VStack(alignment: .leading, spacing: 0) {
+                        // 브랜드
+                        ProductDetailBrandView(product: viewModel.productDetail)
+                        
+                        Rectangle()
+                            .fill(Color.lightGray)
+                            .frame(height: 1)
+                        
+                        // 카테고리
+                        Text("\(viewModel.productDetail?.parentCategoryName ?? "")\(viewModel.productDetail?.categoryName != nil ? " > " : "")\(viewModel.productDetail?.categoryName ?? "")")
+                            .font(.system(size: 13, weight: .regular))
+                            .foregroundColor(Color(hex: "666666"))
+                            .padding(.top, 16)
+                        
+                        // 상품명
+                        Text(viewModel.productDetail?.name ?? "")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(.black)
+                            .padding(.top, 4)
+                            .multilineTextAlignment(.leading)
+                        
+                        // 상품 태그
+                        HStack(alignment: .center, spacing: 2) {
+                            TagTextView(text: "PLUS배송")
+                            TagTextView(text: "무신사단독")
+                        }
+                        .padding(.top, 8)
+                        
+                        // 가격
+                        ProductDetailPriceView(product: viewModel.productDetail)
+                        
                     }
-                    .padding(.top, 8)
-                    
-                    // 가격
-                    ProductDetailPriceView(product: viewModel.productDetail)
+                    .padding(.horizontal, 16)
                     
                 }
-                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.white)
                 
+                // 구매하기 버튼
+                ProductDetailBuyButtonView(isBuyingPresented: $isBuyingPresented)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(.white)
             
-            // 구매하기 버튼
-            ProductDetailBuyButtonView()
+            if isBuyingPresented {
+                BottomSheetView(isPresented: $isBuyingPresented) {
+                    VStack(alignment: .center, spacing: 0) {
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        Text("구매하기 구매하기")
+                            .foregroundStyle(.blue)
+                        
+                        // 구분선
+                        Rectangle()
+                            .fill(Color.lightGray)
+                            .frame(height: 1)
+                        
+                        HStack(alignment: .center, spacing: 8) {
+                            Button {
+                                print("장바구니 클릭")
+                            } label: {
+                                Text("장바구니")
+                            }
+                            .buttonStyle(SecondaryButtonStyle())
+                            .frame(width: .infinity, height: 44)
+                            
+                            Button {
+                                print("구매하기 클릭")
+                            } label: {
+                                Text("구매하기")
+                            }
+                            .buttonStyle(PrimaryButtonStyle())
+                            .frame(width: .infinity, height: 44)
+                        }
+                        .padding(.top, 12)
+                        .padding(.bottom, 20)
+                    }
+                    .padding(.horizontal, 16)
+                }
+            }
         }
         .task {
             await viewModel.getProductDetail(productId)
@@ -161,11 +220,13 @@ struct ProductDetailPriceView: View {
 
 struct ProductDetailBuyButtonView: View {
     
+    @Binding var isBuyingPresented: Bool
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             Rectangle()
-                .fill(Color.lightGray) // 회색, 0.5 투명도
-                .frame(height: 1) // 높이 0.5px
+                .fill(Color.lightGray)
+                .frame(height: 1)
             
             HStack(alignment: .center, spacing: 12) {
                 VStack(alignment: .center, spacing: 0) {
@@ -188,6 +249,7 @@ struct ProductDetailBuyButtonView: View {
                 .frame(minWidth: 48)
                 Button(action: {
                     print("구매하기 클릭!")
+                    isBuyingPresented.toggle()
                 }) {
                     Text("구매하기")
                 }
